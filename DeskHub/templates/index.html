@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DeskHub - Bienvenida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        function toggleMenu() {
+            /* const menu = document.getElementById("sidebar");
+            menu.classList.toggle("active"); */
+        }
+    </script>
+</head>
+<body>
+    <!-- Header con logo (blanco de fondo) -->
+    <header class="header header-light">
+        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Logo DeskHub" class="logo" onclick="toggleMenu()"> 
+    </header>
+
+    <!-- Menú lateral -->
+    <nav id="sidebar" class="sidebar">
+        <ul>
+            <li><a href="{{ url_for('usuarios') }}">👤 Usuarios</a></li>
+            <li><a href="{{ url_for('ubicaciones') }}">📍 Ubicaciones</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenido -->
+    <main class="content">
+        <div class="card">
+            <h2>¡Bienvenido a DeskHub!</h2>
+            <p>El sistema de gestión de puestos de trabajo.</p>
+            <!-- <p>Usa el menú (clic en el logo) para navegar entre las opciones.</p> -->
+            <p>¿Qué quieres hacer?</p>
+            <div class="actions">
+                <a href="{{ url_for('usuarios') }}" class="btn btn-primary">👤 Gestionar Usuarios</a>
+                <a href="{{ url_for('ubicaciones') }}" class="btn btn-success">📍 Gestionar Ubicaciones</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 DeskHub - Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Asientos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Bootstrap (opcional, si quieres estilos rápidos) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Gestión de Puestos de Trabajo</h1>
+
+        <!-- Mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div>
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Formulario Crear Asiento -->
+        <div class="card mb-4">
+            <div class="card-header">Crear nuevo asiento</div>
+            <div class="card-body">
+                <form action="{{ url_for('crear_asiento') }}" method="post" class="row g-3">
+                    <div class="col-md-4">
+                        <input type="text" name="nombre" class="form-control" placeholder="Nombre del asiento" required>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="estado" class="form-select">
+                            <option value="Disponible">Disponible</option>
+                            <option value="Ocupado">Ocupado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="ubicacion_id" class="form-control" placeholder="Ubicación ID" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Crear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lista de Asientos -->
+        <div class="row">
+            {% for puesto in puestos %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ puesto.Nombre }}</h5>
+                        <p class="card-text">
+                            Estado:
+                            {% if puesto.EstadoAsiento %}
+                                <span class="badge bg-success">Disponible</span>
+                            {% else %}
+                                <span class="badge bg-danger">Ocupado</span>
+                            {% endif %}
+                        </p>
+                        <p class="card-text"><small class="text-muted">Ubicación ID: {{ puesto.IdUbicacion }}</small></p>
+
+                        <!-- Botón Editar (link a editar_asiento) -->
+                        <a href="{{ url_for('editar_asiento', id=puesto.IdAsiento) }}" class="btn btn-warning btn-sm">Editar</a>
+
+                        <!-- Botón Eliminar (form POST) -->
+                        <form action="{{ url_for('eliminar_asiento', id=puesto.IdAsiento) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Seguro que deseas eliminar este asiento?')">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p class="text-center">No hay asientos registrados aún.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

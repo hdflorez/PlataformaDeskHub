@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Ubicación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script>
+        function toggleMenu() {
+            window.location.href = "{{ url_for('index') }}"; // redirige a index
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-light">
+        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="Logo DeskHub" class="logo" onclick="toggleMenu()">
+        <h1>DeskHub</h1>
+    </header> 
+
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar">
+        <ul>
+            <li><a href="{{ url_for('usuarios') }}">👤 Usuarios</a></li>
+            <li><a href="{{ url_for('ubicaciones') }}">📍 Ubicaciones</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenido -->
+    <main class="content">
+        <div class="card">
+            <h2>✏️ Editar Ubicación</h2>
+            <form action="{{ url_for('editar_ubicacion', id=ubicacion.IdUbicacion) }}" method="post">
+                <div class="form-group">
+                    <label for="nombre">Nombre de la Ubicación:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" value="{{ ubicacion.Nombre }}" required>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-success">💾 Guardar Cambios</button>
+                    <a href="{{ url_for('ubicaciones') }}" class="btn btn-secondary">↩ Volver</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 DeskHub - Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>
